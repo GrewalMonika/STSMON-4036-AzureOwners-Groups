@@ -61,8 +61,7 @@ for group_id in group_ids:
         for member in data_members['value']:
             member_info = {
                 "Name": member['displayName'],
-                "email": member.get('mail', 'No email'),
-                "group_id": group_id
+                "email": member.get('mail', 'No email')
             }
 
             # Fetch the group name
@@ -75,7 +74,7 @@ for group_id in group_ids:
                 # Prepare the event data for member
                 member_event_data = {
                     "event": member_info,
-                    "sourcetype": "azure:assets:azgroup:members",  # Sourcetype for member
+                    "sourcetype": "Azure_members",  # Sourcetype for member
                     "index": "test",
                     "host": "azure_graph_api",
                     "source": "azure_graph_api"
@@ -107,8 +106,7 @@ for group_id in group_ids:
         for owner in data_owners['value']:
             owner_info = {
                 "Name": owner['displayName'],
-                "email": owner.get('mail', 'No email'),
-                "group_id": group_id
+                "email": owner.get('mail', 'No email')
             }
 
             # Fetch the group name
@@ -121,7 +119,7 @@ for group_id in group_ids:
                 # Prepare the event data for owner
                 owner_event_data = {
                     "event": owner_info,
-                    "sourcetype": "azure:assets:azgroup:owners",  # Sourcetype for owner
+                    "sourcetype": "Azure_owners",  # Sourcetype for owner
                     "index": "test",
                     "host": "azure_graph_api",
                     "source": "azure_graph_api"
