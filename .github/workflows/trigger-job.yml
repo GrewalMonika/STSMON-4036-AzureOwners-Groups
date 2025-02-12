@@ -1,0 +1,33 @@
+name: Run Azure Script Every 24 Hours
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+  workflow_dispatch:  # Allows manual triggering if needed
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest  # Use Ubuntu as the runner environment
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Checkout your repository to access the script
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'  # Specify the Python version to use
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests azure-identity  # Install the necessary packages (you can add more here)
+
+    - name: Run the Azure Script
+      run: python Runbooks/PythonscriptforAzureAD.py  
+      env:
+        TENANT_ID: ${{ secrets.TENANT_ID }}  
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        SPLUNK_HEC_TOKEN: ${{ secrets.SPLUNK_HEC_TOKEN }}
+
