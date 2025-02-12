@@ -15,7 +15,7 @@ print(f"SPLUNK_HEC_TOKEN: {os.getenv('SPLUNK_HEC_TOKEN')}")
 tenant_id = os.getenv('TENANT_ID') 
 client_id = os.getenv('CLIENT_ID') 
 client_secret = os.getenv('CLIENT_SECRET')  
-splunk_hec_token = os.getenv('SPLUNK_HEC_TOKEN') 
+hec_token = os.getenv('SPLUNK_HEC_TOKEN') 
 
 # Ensure the environment variables are available
 if not tenant_id or not client_id or not client_secret or not splunk_hec_token:
@@ -57,7 +57,7 @@ token = credentials.get_token('https://graph.microsoft.com/.default').token
 # Set the headers for the request to Microsoft Graph API
 headers = {
     'Authorization': f'Bearer {token}',
-    'ConsistencyLevel': 'eventual'  # Optional: For eventual consistency if needed
+    'ConsistencyLevel': 'eventual' 
 }
 
 
