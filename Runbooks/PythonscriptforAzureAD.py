@@ -6,6 +6,11 @@ from azure.identity import ClientSecretCredential
 import requests
 import json
 
+print(f"TENANT_ID: {os.getenv('TENANT_ID')}")
+print(f"CLIENT_ID: {os.getenv('CLIENT_ID')}")
+print(f"CLIENT_SECRET: {os.getenv('CLIENT_SECRET')}")
+print(f"SPLUNK_HEC_TOKEN: {os.getenv('SPLUNK_HEC_TOKEN')}")
+
 # Access environment variables
 tenant_id = os.getenv('TENANT_ID') 
 client_id = os.getenv('CLIENT_ID') 
