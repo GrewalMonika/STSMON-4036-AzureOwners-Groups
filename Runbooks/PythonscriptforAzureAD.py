@@ -18,7 +18,7 @@ client_secret = os.getenv('CLIENT_SECRET')
 hec_token = os.getenv('SPLUNK_HEC_TOKEN') 
 
 # Ensure the environment variables are available
-if not tenant_id or not client_id or not client_secret or not splunk_hec_token:
+if not tenant_id or not client_id or not client_secret or not hec_token:
     raise ValueError("One or more environment variables are missing!")
 
 
