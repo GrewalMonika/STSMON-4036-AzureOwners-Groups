@@ -1,27 +1,21 @@
 #!/usr/bin/env python
 import subprocess
 import sys
-
-try:
-    import requests
-    from azure.identity import ClientSecretCredential
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "azure-identity"])
-
-
+import os
 from azure.identity import ClientSecretCredential
 import requests
-
-
-import requests
-from azure.identity import ClientSecretCredential
 import json
 
-# Azure App Registration details
-tenant_id = 'a33c6ac4-a52e-45c5-af07-b972df9bd004'
-client_id = '8a8178c4-dc8a-4576-b60b-bf2e4ad3f9fe'
-client_secret = 'CDe8Q~WNOnsbuFL2g3ME.NlXJFRLivnAjNoY0c3b'
+# Access environment variables
+tenant_id = os.getenv('TENANT_ID') 
+client_id = os.getenv('CLIENT_ID') 
+client_secret = os.getenv('CLIENT_SECRET')  
+splunk_hec_token = os.getenv('SPLUNK_HEC_TOKEN') 
+
+# Ensure the environment variables are available
+if not tenant_id or not client_id or not client_secret or not splunk_hec_token:
+    raise ValueError("One or more environment variables are missing!")
+
 
 # List of Group IDs 
 group_ids = [
@@ -47,7 +41,7 @@ group_ids = [
 
 # Splunk HEC details
 splunk_url = "https://http-inputs-interikea.splunkcloud.com"
-hec_token = "1ce90f9a-8be7-4051-901d-65c3fd41f849"
+
 
 # Authenticate and get the access token using Client Credentials flow
 credentials = ClientSecretCredential(tenant_id, client_id, client_secret)
@@ -60,6 +54,7 @@ headers = {
     'Authorization': f'Bearer {token}',
     'ConsistencyLevel': 'eventual'  # Optional: For eventual consistency if needed
 }
+
 
 # Loop over each group_id
 for group_id in group_ids:
