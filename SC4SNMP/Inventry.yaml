@@ -1,0 +1,8 @@
+inventory: |-
+  address,port,version,community,secret,security_engine,walk_interval,profiles,smart_profiles,delete
+  10.222.2.8,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1800,small_walk,t,f
+  10.222.2.6,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1800,Basic_test,t,f
+  10.222.2.44,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1800,,f,f
+  10.101.22.1,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1800,walk_profile;cisco_cpu_memory_profile,f,f
+  10.222.2.90,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1800,gw_profile,f,f
+  10.222.2.68,161,2c,XquNGr8h86toiRNauormZzi48gUXyB,,,1801,aruba_switch_profile;gw_profile,f,f
