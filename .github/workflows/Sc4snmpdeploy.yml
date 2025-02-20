@@ -21,8 +21,8 @@ jobs:
 
     - name: Add remote host to known_hosts
       run: |
-        ssh-keyscan -H azvmsc4stst01 >> ~/.ssh/known_hosts
+        ssh-keyscan -H 10.103.39.37 >> ~/.ssh/known_hosts
 
     - name: Test SSH connection
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@azvmsc4stst01 "echo 'SSH Connection works!'"
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@10.103.39.37 "echo 'SSH Connection works!'"
