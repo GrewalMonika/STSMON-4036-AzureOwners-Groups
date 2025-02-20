@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest 
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -18,7 +19,16 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy configuration file to the server
+    - name: Add SSH key to SSH agent
       run: |
-     
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        
+    - name: Add known hosts
+      run: |
+        ssh-keyscan -H azvmsc4stst01 >> ~/.ssh/known_hosts
+
+    - name: Deploy configuration file to the server
+      run: |     
         scp ./Inventry.yaml root@azvmsc4stst01:/opt/MonTest/Testinventory.yaml
