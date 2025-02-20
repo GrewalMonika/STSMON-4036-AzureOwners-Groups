@@ -1,34 +1,28 @@
-
-name: SC4SNMP Configuration Deployment
+name: SSH Test
 
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest 
-    
+  ssh-test:
+    runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up SSH for remote server
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Add SSH key to SSH agent
+    - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        
-    - name: Add known hosts
+
+    - name: Add remote host to known_hosts
       run: |
         ssh-keyscan -H azvmsc4stst01 >> ~/.ssh/known_hosts
 
-    - name: Deploy configuration file to the server
-      run: |     
-        scp ./Inventry.yaml root@azvmsc4stst01:/opt/MonTest/Testinventory.yaml
+    - name: Test SSH connection
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@azvmsc4stst01 "echo 'SSH Connection works!'"
