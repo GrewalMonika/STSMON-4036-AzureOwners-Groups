@@ -1,27 +1,27 @@
-name: Deploy SNMP Server
- 
+name: SC4SNMP Configuration Deployment
+
 on:
   push:
     branches:
       - main 
- 
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up SSH for server
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $REMOTE_SERVER_IP >> ~/.ssh/known_hosts
- 
-      - name: Deploy to SNMP Server
-        run: |
-          ssh user@$REMOTE_SERVER_IP "cd /path/to/snmpsetup && git pull && ./deploy.sh"
+    - name: Set up SSH for remote server
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
- 
+    - name: Deploy configuration file to the server
+      run: |
+     
+        scp ./Inventry.yaml root@azvmsc4stst01:/opt/MonTest/Testinventory.yaml
+
+   # - name: Restart SC4SNMP
+     # run: |
+        #ssh root@azvmsc4stst01 'sudo systemctl restart sc4snmp'
