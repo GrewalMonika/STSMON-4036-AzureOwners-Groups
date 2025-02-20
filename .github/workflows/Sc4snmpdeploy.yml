@@ -1,0 +1,24 @@
+
+name: SC4SNMP Configuration Deployment
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH for remote server
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy configuration file to the server
+      run: |
+     
+        scp ./Inventry.yaml root@azvmsc4stst01:/opt/MonTest/Testinventory.yaml
