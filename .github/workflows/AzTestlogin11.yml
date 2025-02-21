@@ -1,0 +1,30 @@
+name: Connect to Azure VM and Execute Script
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  connect-to-azure:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/setup-azure-cli@v1
+
+    - name: Login to Azure
+      run: |
+        az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
+
+    - name: Run Azure SSH Script
+      run: |
+   
+        echo "#!/bin/bash" > connect.sh
+        echo "az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}" >> connect.sh
+        echo "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa azureuser@${{ secrets.VM_IP }} 'echo \"Hello from GitHub Actions!\"'" >> connect.sh
+        chmod +x connect.sh
+        ./connect.sh
