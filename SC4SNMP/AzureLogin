@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+echo "Logging into Azure..."
+az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+
+
+echo "Connecting to Azure VM..."
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa azureuser@10.103.39.37
